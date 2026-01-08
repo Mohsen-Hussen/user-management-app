@@ -1,5 +1,5 @@
 import { useTheme } from "@/app/providers/useTheme";
-import IconButton from "@/app/shared/ui/IconButton";
+import IconButton from "@/app/shared/components/IconButton";
 import MembersPage from "@/app/pages/MembersPage";
 import { Moon, Sun } from "lucide-react";
 
