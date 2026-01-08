@@ -1,10 +1,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import "./styles/tailwind.css";
 import App from "./App";
+import QueryProvider from "@/app/providers/QueryProvider";
+import { ThemeProvider } from "@/app/providers/ThemeProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+      <QueryProvider>
+        <App />
+      </QueryProvider>
+    </ThemeProvider>
   </StrictMode>,
 );
