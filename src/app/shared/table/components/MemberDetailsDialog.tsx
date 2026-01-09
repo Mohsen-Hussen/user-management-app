@@ -1,6 +1,7 @@
-import LoadingSkeleton from "@/app/shared/components/LoadingSkeleton";
-import Button from "@/app/shared/components/Button";
+import useMemberDetailsQuery from "@/app/hooks/useMemberDetailsQuery";
 import { Dialog, DialogContent, DialogTitle } from "@/app/shared/components/Dialog";
+import Button from "@/app/shared/components/Button";
+import LoadingSkeleton from "@/app/shared/components/LoadingSkeleton";
 
 const MemberDetailsDialog = ({
   open,
@@ -11,18 +12,7 @@ const MemberDetailsDialog = ({
   onOpenChange: (open: boolean) => void;
   memberId: string;
 }) => {
-  const dummyData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    location: "New York, NY",
-    bio: "Senior software engineer with 5+ years of experience in React and TypeScript. Passionate about building user-friendly applications and mentoring junior developers.",
-  };
-
-  const isLoading = false;
-  const isError = false;
-  const data = dummyData;
-  const refetch = () => console.log(memberId, "Refetch member data");
+  const { data, isLoading, isError, refetch } = useMemberDetailsQuery(memberId, open);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

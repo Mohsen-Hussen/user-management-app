@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { MoreVertical, Trash2, UserRound, ToggleLeft } from "lucide-react";
-import IconButton from "@/app/shared/components/IconButton";
+import useUpdateMemberStatus from "@/app/hooks/useUpdateMemberStatus";
+import useDeleteMembers from "@/app/hooks/useDeleteMembers";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,76 +10,22 @@ import {
   DropdownMenuTrigger,
 } from "@/app/shared/components/DropdownMenu";
 import ConfirmDialog from "@/app/shared/components/ConfirmDialog";
-import MemberDetailsDialog from "./MemberDetailsDialog";
+import MemberDetailsDialog from "@/app/shared/table/components/MemberDetailsDialog";
+import IconButton from "@/app/shared/components/IconButton";
+import type { Member } from "@/app/api/members.schemas";
 
-type Member = {
-  id: string;
-  name: string;
-  email: string;
-  avatarUrl: string;
-  title: string;
-  since: string;
-  project: {
-    name: string;
-    subtitle: string;
-    iconKey: string;
-  };
-  document: {
-    filename: string;
-    sizeMb: number;
-  };
-  status: "active" | "absent";
-  phone: string;
-  location: string;
-  bio: string;
-};
+const MemberRowActions = ({ member }: { member: Member }) => {
+  const updateStatus = useUpdateMemberStatus();
+  const deleteMembers = useDeleteMembers();
 
-const dummyMember: Member = {
-  id: "1",
-  name: "James Brown",
-  email: "james@aliqui.com",
-  avatarUrl: "https://i.pravatar.cc/100?img=12",
-  title: "Marketing Manager",
-  since: "2021-02-01",
-  project: {
-    name: "Monday.com",
-    subtitle: "Campaign Strategy Brainstorm",
-    iconKey: "monday",
-  },
-  document: {
-    filename: "brown-james.pdf",
-    sizeMb: 2.4,
-  },
-  status: "active",
-  phone: "+20 10 1234 5678",
-  location: "Cairo, EG",
-  bio: "Focuses on growth strategy and campaign experimentation.",
-};
-
-const updateStatus = {
-  mutate: ({ id, status }: { id: string; status: string }) => {
-    console.log(`Mock: Updating status for member ${id} to ${status}`);
-  },
-  isPending: false,
-};
-
-const deleteMembers = {
-  mutate: (ids: string[], options?: { onSuccess?: () => void }) => {
-    console.log(`Mock: Deleting members with ids:`, ids);
-    options?.onSuccess?.();
-  },
-  isPending: false,
-};
-
-export function MemberRowActions({ member = dummyMember }: { member?: Member }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [detailsOpen, setDetailsOpen] = useState<boolean>(false);
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
   const onToggleStatus = useCallback(() => {
     const next = member.status === "active" ? "absent" : "active";
     updateStatus.mutate({ id: member.id, status: next });
-  }, [member.id, member.status]);
+  }, [member.id, member.status, updateStatus]);
 
   const onViewDetailsSelect = useCallback((e: Event) => {
     e.preventDefault();
@@ -94,7 +41,7 @@ export function MemberRowActions({ member = dummyMember }: { member?: Member }) 
 
   const onConfirmDelete = useCallback(() => {
     deleteMembers.mutate([member.id], { onSuccess: () => setConfirmOpen(false) });
-  }, [member.id]);
+  }, [deleteMembers, member.id]);
 
   return (
     <>
@@ -143,4 +90,6 @@ export function MemberRowActions({ member = dummyMember }: { member?: Member }) 
       />
     </>
   );
-}
+};
+
+export default MemberRowActions;

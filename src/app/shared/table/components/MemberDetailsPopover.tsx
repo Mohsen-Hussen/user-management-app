@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from "react";
+import useMemberDetailsQuery from "@/app/hooks/useMemberDetailsQuery";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/shared/components/Popover";
+import Button from "@/app/shared/components/Button";
 import LoadingSkeleton from "@/app/shared/components/LoadingSkeleton";
-import Button from "@/app/shared/components//Button";
 
 const MemberDetailsPopover = ({
   memberId,
@@ -10,20 +11,8 @@ const MemberDetailsPopover = ({
   memberId: string;
   trigger: React.ReactNode;
 }) => {
-  const dummyData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    location: "New York, NY",
-    bio: "Senior software engineer with 5+ years of experience in React and TypeScript. Passionate about building user-friendly applications and mentoring junior developers.",
-  };
-
-  const isLoading = false;
-  const isError = false;
-  const data = dummyData;
-  const refetch = () => console.log(memberId, "Refetch member data");
   const [open, setOpen] = useState<boolean>(false);
-
+  const { data, isLoading, isError, refetch } = useMemberDetailsQuery(memberId, open);
   const onOpenChange = useCallback((next: boolean) => setOpen(next), []);
 
   return (

@@ -1,31 +1,11 @@
 import React, { useMemo } from "react";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { FileText } from "lucide-react";
-import Badge from "@/app/shared/components/Badge";
 import { GenericTable } from "@/app/shared/table/GenericTable/GenericTable";
-import { MemberRowActions } from "./MemberRowActions";
-import MemberAvatar from "./MemberAvatar";
-type Member = {
-  id: string;
-  name: string;
-  email: string;
-  avatarUrl: string;
-  title: string;
-  since: string;
-  project: {
-    name: string;
-    subtitle: string;
-    iconKey: string;
-  };
-  document: {
-    filename: string;
-    sizeMb: number;
-  };
-  status: "active" | "absent";
-  phone: string;
-  location: string;
-  bio: string;
-};
+import MemberRowActions from "@/app/shared/table/components/MemberRowActions";
+import MemberAvatar from "@/app/shared/table/components/MemberAvatar";
+import Badge from "@/app/shared/components/Badge";
+import type { Member } from "@/app/api/members.schemas";
 
 function formatSince(iso: string) {
   const d = new Date(iso);
@@ -46,7 +26,7 @@ const MembersTable = ({
   rowSelection: RowSelectionState;
   onRowSelectionChange: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }) => {
-  const columns = useMemo<ColumnDef<Member, unknown>[]>(() => {
+  const columns = useMemo<ColumnDef<Member>[]>(() => {
     return [
       {
         accessorKey: "name",
