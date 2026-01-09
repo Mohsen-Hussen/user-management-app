@@ -56,7 +56,8 @@ const MembersPage = () => {
         <FilterTabs filter={filter} onFilterChange={onFilterChange} />
 
         <Button
-          variant="danger"
+          className="border-red-500 text-red-600 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-950/20"
+          variant="outline"
           size="sm"
           disabled={!canBulkDelete || deleteMembers.isPending}
           onClick={onBulkDeleteClick}
