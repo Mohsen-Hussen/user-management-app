@@ -1,8 +1,8 @@
 import { useState, useMemo, useCallback } from "react";
 import useMembersQuery from "@/app/hooks/useMembersQuery";
 import useDeleteMembers from "@/app/hooks/useDeleteMembers";
-import { cn } from "@/app/shared/lib/cn";
 import MembersTable from "@/app/shared/table/components/MembersTable";
+import FilterTabs from "@/app/shared/table/components/FilterTabs";
 import Button from "@/app/shared/components/Button";
 import ConfirmDialog from "@/app/shared/components/ConfirmDialog";
 import type { RowSelectionState } from "@tanstack/react-table";
@@ -53,29 +53,7 @@ const MembersPage = () => {
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="inline-flex overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-950">
-          {(
-            [
-              ["all", "All"],
-              ["active", "Active"],
-              ["absent", "Absent"],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              className={cn(
-                "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
-                filter === key
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                  : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-900",
-              )}
-              onClick={() => onFilterChange(key)}
-              type="button"
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <FilterTabs filter={filter} onFilterChange={onFilterChange} />
 
         <Button
           variant="danger"
