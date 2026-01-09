@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "James Brown",
       "email": "james@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=12",
@@ -12,14 +12,17 @@
         "subtitle": "Campaign Strategy Brainstorm",
         "iconKey": "monday"
       },
-      "document": { "filename": "brown-james.pdf", "sizeMb": 2.4 },
+      "document": {
+        "filename": "brown-james.pdf",
+        "sizeMb": 2.4
+      },
       "status": "active",
       "phone": "+20 10 1234 5678",
       "location": "Cairo, EG",
       "bio": "Focuses on growth strategy and campaign experimentation."
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Sophia Williams",
       "email": "sophia@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=32",
@@ -30,14 +33,17 @@
         "subtitle": "Employee Engagement Survey",
         "iconKey": "notion"
       },
-      "document": { "filename": "williams-sophia.pdf", "sizeMb": 2.4 },
+      "document": {
+        "filename": "williams-sophia.pdf",
+        "sizeMb": 2.4
+      },
       "status": "active",
       "phone": "+20 11 2345 6789",
       "location": "Giza, EG",
       "bio": ""
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Arthur Taylor",
       "email": "arthur@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=56",
@@ -48,14 +54,17 @@
         "subtitle": "Vision and Goal Setting Session",
         "iconKey": "spotify"
       },
-      "document": { "filename": "taylor-arthur.pdf", "sizeMb": 2.4 },
+      "document": {
+        "filename": "taylor-arthur.pdf",
+        "sizeMb": 2.4
+      },
       "status": "absent",
       "phone": "",
       "location": "",
       "bio": ""
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Emma Wright",
       "email": "emma@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=47",
@@ -66,28 +75,38 @@
         "subtitle": "User Feedback Analysis",
         "iconKey": "formcarry"
       },
-      "document": { "filename": "wright-emma.pdf", "sizeMb": 1.9 },
+      "document": {
+        "filename": "wright-emma.pdf",
+        "sizeMb": 1.9
+      },
       "status": "active",
       "phone": "",
       "location": "",
       "bio": ""
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Matthew Johnson",
       "email": "matthew@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=18",
       "title": "Data Software Engineer",
       "since": "2022-02-01",
-      "project": { "name": "Loom", "subtitle": "Data Analysis Methodology", "iconKey": "loom" },
-      "document": { "filename": "johnson-matthew.pdf", "sizeMb": 2.9 },
+      "project": {
+        "name": "Loom",
+        "subtitle": "Data Analysis Methodology",
+        "iconKey": "loom"
+      },
+      "document": {
+        "filename": "johnson-matthew.pdf",
+        "sizeMb": 2.9
+      },
       "status": "absent",
       "phone": "",
       "location": "",
       "bio": ""
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Laura Perez",
       "email": "laura@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=68",
@@ -98,14 +117,17 @@
         "subtitle": "Design Trends and Inspiration",
         "iconKey": "tidal"
       },
-      "document": { "filename": "perez-laura.pdf", "sizeMb": 2.5 },
+      "document": {
+        "filename": "perez-laura.pdf",
+        "sizeMb": 2.5
+      },
       "status": "absent",
       "phone": "",
       "location": "",
       "bio": ""
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Wei Chen",
       "email": "wei@aliqui.com",
       "avatarUrl": "https://i.pravatar.cc/100?img=5",
@@ -116,7 +138,10 @@
         "subtitle": "Process Optimization Brainstorm",
         "iconKey": "dropbox"
       },
-      "document": { "filename": "chen-wei.pdf", "sizeMb": 2.6 },
+      "document": {
+        "filename": "chen-wei.pdf",
+        "sizeMb": 2.6
+      },
       "status": "active",
       "phone": "",
       "location": "",

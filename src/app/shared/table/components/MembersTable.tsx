@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
-import { FileText } from "lucide-react";
+import { PdfIcon } from "@/app/shared/components/PdfIcon";
 import { GenericTable } from "@/app/shared/table/GenericTable/GenericTable";
 import MemberRowActions from "@/app/shared/table/components/MemberRowActions";
 import MemberAvatar from "@/app/shared/table/components/MemberAvatar";
-import Badge from "@/app/shared/components/Badge";
+import StatusIcon from "@/app/shared/components/StatusIcon";
+import ProjectIcon from "@/app/shared/components/ProjectIcon";
 import type { Member } from "@/app/api/members.schemas";
 
 function formatSince(iso: string) {
@@ -65,13 +66,18 @@ const MembersTable = ({
         cell: ({ row }) => {
           const p = row.original.project;
           return (
-            <div className="min-w-0">
-              <div className="truncate font-medium text-zinc-900 dark:text-zinc-100">{p.name}</div>
-              {p.subtitle ? (
-                <div className="truncate text-xs text-zinc-500 dark:text-zinc-400">
-                  {p.subtitle}
+            <div className="flex items-center gap-2 min-w-0">
+              <ProjectIcon iconKey={p.iconKey || "default"} className="h-5 w-5 flex-shrink-0" />
+              <div>
+                <div className="truncate font-medium text-zinc-900 dark:text-zinc-100">
+                  {p.name}
                 </div>
-              ) : null}
+                {p.subtitle ? (
+                  <div className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                    {p.subtitle}
+                  </div>
+                ) : null}
+              </div>
             </div>
           );
         },
@@ -84,7 +90,7 @@ const MembersTable = ({
           if (!doc) return <span className="text-xs text-zinc-500 dark:text-zinc-400">—</span>;
           return (
             <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4 text-red-600" />
+              <PdfIcon className="h-4 w-4" />
               <div className="min-w-0">
                 <div className="truncate text-sm text-zinc-900 dark:text-zinc-100">
                   {doc.filename}
@@ -103,16 +109,14 @@ const MembersTable = ({
         cell: ({ row }) => {
           const s = row.original.status;
           return (
-            <Badge variant={s === "active" ? "success" : "muted"}>
-              <span
-                className={
-                  s === "active"
-                    ? "h-1.5 w-1.5 rounded-full bg-emerald-500"
-                    : "h-1.5 w-1.5 rounded-full bg-zinc-400"
-                }
-              />
-              {s === "active" ? "Active" : "Absent"}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 border rounded-md px-2 py-1 border-[#EBEBEB] dark:border-[#262626]">
+                <StatusIcon status={s} className="h-4 w-4" />
+                <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                  {s === "active" ? "Active" : "Absent"}
+                </span>
+              </div>
+            </div>
           );
         },
       },
