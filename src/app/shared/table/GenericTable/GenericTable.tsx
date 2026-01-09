@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import {
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
   type Table,
   type Row,
@@ -37,6 +38,8 @@ export const GenericTable = React.memo(function GenericTable<TData>(
     getRowId,
     rowSelection,
     onRowSelectionChange,
+    sorting,
+    onSortingChange,
     emptyTitle = "No results",
     emptyDescription,
   } = props;
@@ -75,10 +78,15 @@ export const GenericTable = React.memo(function GenericTable<TData>(
     data,
     columns: useMemo(() => [selectionColumn, ...columns], [selectionColumn, columns]),
     getRowId: (row) => getRowId(row as TData),
-    state: { rowSelection },
+    state: {
+      rowSelection,
+      ...(sorting && { sorting }),
+    },
     onRowSelectionChange,
+    ...(onSortingChange && { onSortingChange }),
     enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   if (isLoading) return <TableSkeleton />;

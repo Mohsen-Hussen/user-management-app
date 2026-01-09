@@ -1,11 +1,13 @@
-import React, { useMemo } from "react";
-import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
-import { PdfIcon } from "@/app/shared/components/PdfIcon";
+import React, { useMemo, useState } from "react";
+import { ArrowUpAZ, ArrowDownAZ } from "lucide-react";
+import type { ColumnDef, RowSelectionState, SortingState } from "@tanstack/react-table";
 import { GenericTable } from "@/app/shared/table/GenericTable/GenericTable";
 import MemberRowActions from "@/app/shared/table/components/MemberRowActions";
 import MemberAvatar from "@/app/shared/table/components/MemberAvatar";
+import { PdfIcon } from "@/app/shared/components/PdfIcon";
 import StatusIcon from "@/app/shared/components/StatusIcon";
 import ProjectIcon from "@/app/shared/components/ProjectIcon";
+import sortingIcon from "@/app/assets/sorting-icon.svg";
 import type { Member } from "@/app/api/members.schemas";
 
 function formatSince(iso: string) {
@@ -27,11 +29,28 @@ const MembersTable = ({
   rowSelection: RowSelectionState;
   onRowSelectionChange: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const columns = useMemo<ColumnDef<Member>[]>(() => {
     return [
       {
         accessorKey: "name",
-        header: "Member Name",
+        header: ({ column }) => (
+          <div className="flex items-center gap-1">
+            <span>Member Name</span>
+            <button
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="flex items-center"
+            >
+              {column.getIsSorted() === "asc" ? (
+                <ArrowUpAZ className="h-4 w-4" />
+              ) : column.getIsSorted() === "desc" ? (
+                <ArrowDownAZ className="h-4 w-4" />
+              ) : (
+                <img src={sortingIcon} alt="Sort" className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        ),
         cell: ({ row }) => {
           const m = row.original;
           return (
@@ -49,7 +68,23 @@ const MembersTable = ({
       },
       {
         accessorKey: "title",
-        header: "Title",
+        header: ({ column }) => (
+          <div className="flex items-center gap-1">
+            <span>Title</span>
+            <button
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="flex items-center"
+            >
+              {column.getIsSorted() === "asc" ? (
+                <ArrowUpAZ className="h-4 w-4" />
+              ) : column.getIsSorted() === "desc" ? (
+                <ArrowDownAZ className="h-4 w-4" />
+              ) : (
+                <img src={sortingIcon} alt="Sort" className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        ),
         cell: ({ row }) => {
           const m = row.original;
           return (
@@ -62,7 +97,23 @@ const MembersTable = ({
       },
       {
         accessorKey: "project",
-        header: "Project",
+        header: ({ column }) => (
+          <div className="flex items-center gap-1">
+            <span>Project</span>
+            <button
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="flex items-center"
+            >
+              {column.getIsSorted() === "asc" ? (
+                <ArrowUpAZ className="h-4 w-4" />
+              ) : column.getIsSorted() === "desc" ? (
+                <ArrowDownAZ className="h-4 w-4" />
+              ) : (
+                <img src={sortingIcon} alt="Sort" className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        ),
         cell: ({ row }) => {
           const p = row.original.project;
           return (
@@ -84,7 +135,23 @@ const MembersTable = ({
       },
       {
         accessorKey: "document",
-        header: "Member Documents",
+        header: ({ column }) => (
+          <div className="flex items-center gap-1">
+            <span>Member Documents</span>
+            <button
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="flex items-center"
+            >
+              {column.getIsSorted() === "asc" ? (
+                <ArrowUpAZ className="h-4 w-4" />
+              ) : column.getIsSorted() === "desc" ? (
+                <ArrowDownAZ className="h-4 w-4" />
+              ) : (
+                <img src={sortingIcon} alt="Sort" className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        ),
         cell: ({ row }) => {
           const doc = row.original.document;
           if (!doc) return <span className="text-xs text-zinc-500 dark:text-zinc-400">—</span>;
@@ -105,7 +172,23 @@ const MembersTable = ({
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: ({ column }) => (
+          <div className="flex items-center gap-1">
+            <span>Status</span>
+            <button
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="flex items-center"
+            >
+              {column.getIsSorted() === "asc" ? (
+                <ArrowUpAZ className="h-4 w-4" />
+              ) : column.getIsSorted() === "desc" ? (
+                <ArrowDownAZ className="h-4 w-4" />
+              ) : (
+                <img src={sortingIcon} alt="Sort" className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        ),
         cell: ({ row }) => {
           const s = row.original.status;
           return (
@@ -142,6 +225,8 @@ const MembersTable = ({
       getRowId={(m) => m.id}
       rowSelection={rowSelection}
       onRowSelectionChange={onRowSelectionChange}
+      sorting={sorting}
+      onSortingChange={setSorting}
       emptyTitle="No members found"
       emptyDescription="Try changing the filter."
     />
