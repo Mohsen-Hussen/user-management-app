@@ -6,13 +6,7 @@ import {
   DialogTitle,
 } from "@/app/shared/components/Dialog";
 import Button from "@/app/shared/components/Button";
-import type { Member } from "@/app/api/members.schemas";
-
-interface EditMemberFormDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  member: Member;
-}
+import type { EditMemberFormDialogProps } from "@/app/types";
 
 const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDialogProps) => {
   const { form, onSubmit, handleClose, isPending } = useEditMemberFormDialog({

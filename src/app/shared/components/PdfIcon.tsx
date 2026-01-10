@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import pdfLight from "@/app/assets/pdf-light.svg";
 import pdfDark from "@/app/assets/pdf-dark.svg";
-
-interface PdfIconProps {
-  className?: string;
-}
+import type { PdfIconProps } from "@/app/types";
 
 export const PdfIcon: React.FC<PdfIconProps> = ({ className = "" }) => {
   const [isDarkMode, setIsDarkMode] = useState(() =>

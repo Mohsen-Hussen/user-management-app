@@ -2,9 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import useMembersQuery from "./useMembersQuery";
 import useDeleteMembers from "./useDeleteMembers";
 import type { RowSelectionState } from "@tanstack/react-table";
-import type { Member } from "@/app/api/members.schemas";
-
-type Filter = "all" | "active" | "absent";
+import type { Filter, Member } from "@/app/types";
 
 function filterMembers(data: Member[], filter: Filter): Member[] {
   if (filter === "all") return data;

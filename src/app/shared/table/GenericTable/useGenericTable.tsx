@@ -8,7 +8,7 @@ import {
   type ColumnDef,
 } from "@tanstack/react-table";
 import Checkbox from "@/app/shared/components/Checkbox";
-import type { GenericTableProps } from "./types";
+import { GenericTableProps } from "@/app/types";
 
 export function useGenericTable<TData>({
   data,

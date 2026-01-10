@@ -8,7 +8,7 @@ import { PdfIcon } from "@/app/shared/components/PdfIcon";
 import StatusIcon from "@/app/shared/components/StatusIcon";
 import ProjectIcon from "@/app/shared/components/ProjectIcon";
 import sortingIcon from "@/app/assets/sorting-icon.svg";
-import type { Member } from "@/app/api/members.schemas";
+import type { Member } from "@/app/types";
 
 function formatSince(iso: string) {
   const d = new Date(iso);

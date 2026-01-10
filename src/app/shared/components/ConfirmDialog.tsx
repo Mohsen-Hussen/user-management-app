@@ -5,18 +5,7 @@ import {
   DialogTitle,
 } from "@/app/shared/components/Dialog";
 import Button from "@/app/shared/components/Button";
-
-type Props = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  description?: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  onConfirm: () => void;
-  isPending?: boolean;
-  tone?: "danger" | "primary";
-};
+import type { ConfirmDialogProps } from "@/app/types";
 
 const ConfirmDialog = ({
   open,
@@ -28,7 +17,7 @@ const ConfirmDialog = ({
   onConfirm,
   isPending,
   tone = "danger",
-}: Props) => {
+}: ConfirmDialogProps) => {
   const confirmVariant = tone === "danger" ? "danger" : "primary";
 
   return (

@@ -2,22 +2,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useUpdateMember from "./useUpdateMember";
-import type { EditMemberForm, Member, MemberDetails } from "@/app/api/members.schemas";
+import type {
+  EditMemberForm,
+  MemberDetails,
+  MemberProject,
+  MemberUpdate,
+  UseEditMemberFormDialogProps,
+} from "@/app/types";
 import { EditMemberSchema } from "@/app/api/members.schemas";
-
-type MemberUpdate = Partial<EditMemberForm> & {
-  since?: string;
-  document?: { filename: string; sizeMb: number };
-  phone?: string;
-  location?: string;
-  bio?: string;
-};
-
-interface UseEditMemberFormDialogProps {
-  open: boolean;
-  member: Member;
-  onOpenChange: (open: boolean) => void;
-}
 
 export const useEditMemberFormDialog = ({
   open,
@@ -60,15 +52,27 @@ export const useEditMemberFormDialog = ({
   }, [open, member, form]);
 
   const onSubmit = (data: EditMemberForm) => {
-    const updates: MemberUpdate = {
-      ...data,
-      avatarUrl: data.avatarUrl || undefined,
-      project: {
-        ...data.project,
-        subtitle: data.project.subtitle || undefined,
-        iconKey: data.project.iconKey || undefined,
-      },
+    const projectUpdate: MemberProject = {
+      name: data.project.name,
     };
+    if (data.project.subtitle !== undefined && data.project.subtitle !== "") {
+      projectUpdate.subtitle = data.project.subtitle;
+    }
+    if (data.project.iconKey !== undefined && data.project.iconKey !== "") {
+      projectUpdate.iconKey = data.project.iconKey;
+    }
+
+    const updates: MemberUpdate = {
+      name: data.name,
+      email: data.email,
+      title: data.title,
+      status: data.status,
+      project: projectUpdate,
+    };
+
+    if (data.avatarUrl !== undefined && data.avatarUrl !== "") {
+      updates.avatarUrl = data.avatarUrl;
+    }
 
     if (member.since) updates.since = member.since;
     if (member.document) updates.document = member.document;

@@ -11,7 +11,7 @@ import ConfirmDialog from "@/app/shared/components/ConfirmDialog";
 import MemberDetailsDialog from "@/app/shared/table/components/MemberDetailsDialog";
 import EditMemberFormDialog from "@/app/shared/table/components/EditMemberFormDialog";
 import IconButton from "@/app/shared/components/IconButton";
-import type { Member } from "@/app/api/members.schemas";
+import type { Member } from "@/app/types";
 
 const MemberRowActions = ({ member }: { member: Member }) => {
   const {

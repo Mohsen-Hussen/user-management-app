@@ -1,11 +1,7 @@
 import React from "react";
 import checkIcon from "@/app/assets/check-icon.svg";
 import absentIcon from "@/app/assets/absent-icon.svg";
-
-interface StatusIconProps {
-  status: "active" | "absent";
-  className?: string;
-}
+import type { StatusIconProps } from "@/app/types";
 
 export const StatusIcon: React.FC<StatusIconProps> = ({ status, className = "" }) => {
   return (

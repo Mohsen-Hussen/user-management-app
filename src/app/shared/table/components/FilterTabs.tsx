@@ -1,12 +1,6 @@
 import { useCallback } from "react";
 import { cn } from "@/app/shared/lib/cn";
-
-type Filter = "all" | "active" | "absent";
-
-interface FilterTabsProps {
-  filter: Filter;
-  onFilterChange: (filter: Filter) => void;
-}
+import type { Filter, FilterTabsProps } from "@/app/types";
 
 const FilterTabs = ({ filter, onFilterChange }: FilterTabsProps) => {
   const handleFilterChange = useCallback(

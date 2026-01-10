@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import useUpdateMemberStatus from "./useUpdateMemberStatus";
 import useDeleteMembers from "./useDeleteMembers";
-import type { Member } from "@/app/api/members.schemas";
+import type { Member } from "@/app/types";
 
 interface UseMemberRowActionsProps {
   member: Member;

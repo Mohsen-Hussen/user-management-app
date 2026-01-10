@@ -1,11 +1,11 @@
 import React from "react";
+import { useGenericTable } from "./useGenericTable";
 import { flexRender } from "@tanstack/react-table";
 import { cn } from "@/app/shared/lib/cn";
 import EmptyState from "@/app/shared/components/EmptyState";
 import ErrorState from "@/app/shared/components/ErrorState";
 import LoadingSkeleton from "@/app/shared/components/LoadingSkeleton";
-import { useGenericTable } from "./useGenericTable";
-import type { GenericTableProps } from "./types";
+import { GenericTableProps } from "@/app/types";
 
 function TableSkeleton() {
   return (

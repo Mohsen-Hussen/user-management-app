@@ -17,7 +17,7 @@ export const MemberSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
-  avatarUrl: z.string().url().optional().or(z.literal("")),
+  avatarUrl: z.string().url().optional().or(z.literal("")).optional(),
   title: z.string(),
   since: z.string().optional(),
   project: MemberProjectSchema,
@@ -43,8 +43,3 @@ export const EditMemberSchema = z.object({
     iconKey: z.string().optional(),
   }),
 });
-
-export type EditMemberForm = z.infer<typeof EditMemberSchema>;
-export type Member = z.infer<typeof MemberSchema>;
-export type MemberDetails = z.infer<typeof MemberDetailsSchema>;
-export type MemberStatus = z.infer<typeof MemberStatusSchema>;

@@ -6,11 +6,7 @@ import loom from "@/app/assets/Loom.svg";
 import formcarry from "@/app/assets/Formcarry.svg";
 import dropbox from "@/app/assets/Dropbox.svg";
 import tidal from "@/app/assets/Tidal.svg";
-
-interface ProjectIconProps {
-  iconKey: string;
-  className?: string;
-}
+import type { ProjectIconProps } from "@/app/types";
 
 const iconMap: Record<string, string> = {
   monday: mondayDotCom,
