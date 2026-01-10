@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEditMemberFormDialog } from "@/app/hooks/useEditMemberFormDialog";
 import {
   Dialog,
   DialogContent,
@@ -8,17 +6,7 @@ import {
   DialogTitle,
 } from "@/app/shared/components/Dialog";
 import Button from "@/app/shared/components/Button";
-import useUpdateMember from "@/app/hooks/useUpdateMember";
-import type { EditMemberForm, Member, MemberDetails } from "@/app/api/members.schemas";
-import { EditMemberSchema } from "@/app/api/members.schemas";
-
-type MemberUpdate = Partial<EditMemberForm> & {
-  since?: string;
-  document?: { filename: string; sizeMb: number };
-  phone?: string;
-  location?: string;
-  bio?: string;
-};
+import type { Member } from "@/app/api/members.schemas";
 
 interface EditMemberFormDialogProps {
   open: boolean;
@@ -27,76 +15,11 @@ interface EditMemberFormDialogProps {
 }
 
 const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDialogProps) => {
-  const updateMember = useUpdateMember();
-
-  const form = useForm<EditMemberForm>({
-    resolver: zodResolver(EditMemberSchema),
-    defaultValues: {
-      name: member.name,
-      email: member.email,
-      title: member.title,
-      avatarUrl: member.avatarUrl || "",
-      status: member.status,
-      project: {
-        name: member.project.name,
-        subtitle: member.project.subtitle || "",
-        iconKey: member.project.iconKey || "",
-      },
-    },
+  const { form, onSubmit, handleClose, isPending } = useEditMemberFormDialog({
+    open,
+    member,
+    onOpenChange,
   });
-
-  useEffect(() => {
-    if (open) {
-      form.reset({
-        name: member.name,
-        email: member.email,
-        title: member.title,
-        avatarUrl: member.avatarUrl || "",
-        status: member.status,
-        project: {
-          name: member.project.name,
-          subtitle: member.project.subtitle || "",
-          iconKey: member.project.iconKey || "",
-        },
-      });
-    }
-  }, [open, member, form]);
-
-  const onSubmit = (data: EditMemberForm) => {
-    const updates: MemberUpdate = {
-      ...data,
-      avatarUrl: data.avatarUrl || undefined,
-      project: {
-        ...data.project,
-        subtitle: data.project.subtitle || undefined,
-        iconKey: data.project.iconKey || undefined,
-      },
-    };
-
-    if (member.since) updates.since = member.since;
-    if (member.document) updates.document = member.document;
-    const memberDetails = member as MemberDetails;
-    if (memberDetails.phone) updates.phone = memberDetails.phone;
-    if (memberDetails.location) updates.location = memberDetails.location;
-    if (memberDetails.bio) updates.bio = memberDetails.bio;
-
-    updateMember.mutate(
-      { id: member.id, updates },
-      {
-        onSuccess: () => {
-          onOpenChange(false);
-          form.reset();
-        },
-      },
-    );
-  };
-
-  const handleClose = () => {
-    if (!updateMember.isPending) {
-      onOpenChange(false);
-      form.reset();
-    }
-  };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -113,7 +36,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="text"
               {...form.register("name")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
             {form.formState.errors.name && (
               <p className="text-red-600 text-sm mt-1">{form.formState.errors.name.message}</p>
@@ -128,7 +51,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="email"
               {...form.register("email")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
             {form.formState.errors.email && (
               <p className="text-red-600 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -143,7 +66,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="text"
               {...form.register("title")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
             {form.formState.errors.title && (
               <p className="text-red-600 text-sm mt-1">{form.formState.errors.title.message}</p>
@@ -159,7 +82,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               {...form.register("avatarUrl")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
               placeholder="https://example.com/avatar.jpg"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
             {form.formState.errors.avatarUrl && (
               <p className="text-red-600 text-sm mt-1">{form.formState.errors.avatarUrl.message}</p>
@@ -173,7 +96,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
             <select
               {...form.register("status")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             >
               <option value="active">Active</option>
               <option value="absent">Absent</option>
@@ -191,7 +114,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="text"
               {...form.register("project.name")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
             {form.formState.errors.project?.name && (
               <p className="text-red-600 text-sm mt-1">
@@ -208,7 +131,7 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="text"
               {...form.register("project.subtitle")}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              disabled={updateMember.isPending}
+              disabled={isPending}
             />
           </div>
 
@@ -217,13 +140,13 @@ const EditMemberFormDialog = ({ open, onOpenChange, member }: EditMemberFormDial
               type="button"
               variant="secondary"
               onClick={handleClose}
-              disabled={updateMember.isPending}
+              disabled={isPending}
               className="flex-1"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={updateMember.isPending} className="flex-1">
-              {updateMember.isPending ? "Saving..." : "Save Changes"}
+            <Button type="submit" disabled={isPending} className="flex-1">
+              {isPending ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </form>

@@ -1,7 +1,5 @@
-import { useState, useCallback } from "react";
+import { useMemberRowActions } from "@/app/hooks/useMemberRowActions";
 import { MoreVertical, Trash2, UserRound, ToggleLeft, Edit } from "lucide-react";
-import useUpdateMemberStatus from "@/app/hooks/useUpdateMemberStatus";
-import useDeleteMembers from "@/app/hooks/useDeleteMembers";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,40 +14,23 @@ import IconButton from "@/app/shared/components/IconButton";
 import type { Member } from "@/app/api/members.schemas";
 
 const MemberRowActions = ({ member }: { member: Member }) => {
-  const updateStatus = useUpdateMemberStatus();
-  const deleteMembers = useDeleteMembers();
-
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [detailsOpen, setDetailsOpen] = useState<boolean>(false);
-  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
-  const [editOpen, setEditOpen] = useState<boolean>(false);
-
-  const onToggleStatus = useCallback(() => {
-    const next = member.status === "active" ? "absent" : "active";
-    updateStatus.mutate({ id: member.id, status: next });
-  }, [member.id, member.status, updateStatus]);
-
-  const onViewDetailsSelect = useCallback((e: Event) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    setDetailsOpen(true);
-  }, []);
-
-  const onDeleteSelect = useCallback((e: Event) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    setConfirmOpen(true);
-  }, []);
-
-  const onEditSelect = useCallback((e: Event) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    setEditOpen(true);
-  }, []);
-
-  const onConfirmDelete = useCallback(() => {
-    deleteMembers.mutate([member.id], { onSuccess: () => setConfirmOpen(false) });
-  }, [deleteMembers, member.id]);
+  const {
+    menuOpen,
+    detailsOpen,
+    confirmOpen,
+    editOpen,
+    setMenuOpen,
+    setDetailsOpen,
+    setConfirmOpen,
+    setEditOpen,
+    onToggleStatus,
+    onViewDetailsSelect,
+    onDeleteSelect,
+    onEditSelect,
+    onConfirmDelete,
+    isUpdateStatusPending,
+    isDeletePending,
+  } = useMemberRowActions({ member });
 
   return (
     <>
@@ -71,7 +52,7 @@ const MemberRowActions = ({ member }: { member: Member }) => {
             Edit member
           </DropdownMenuItem>
 
-          <DropdownMenuItem onSelect={() => onToggleStatus()} disabled={updateStatus.isPending}>
+          <DropdownMenuItem onSelect={() => onToggleStatus()} disabled={isUpdateStatusPending}>
             <ToggleLeft className="h-4 w-4" />
             Toggle status
           </DropdownMenuItem>
@@ -81,7 +62,7 @@ const MemberRowActions = ({ member }: { member: Member }) => {
           <DropdownMenuItem
             onSelect={onDeleteSelect}
             className="text-red-700 dark:text-red-200"
-            disabled={deleteMembers.isPending}
+            disabled={isDeletePending}
           >
             <Trash2 className="h-4 w-4" />
             Delete
@@ -100,7 +81,7 @@ const MemberRowActions = ({ member }: { member: Member }) => {
         description="This action cannot be undone."
         confirmLabel="Delete"
         onConfirm={onConfirmDelete}
-        isPending={deleteMembers.isPending}
+        isPending={isDeletePending}
         tone="danger"
       />
     </>

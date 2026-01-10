@@ -1,87 +1,6 @@
 {
   "users": [
     {
-      "name": "Mohsen Hussein",
-      "email": "mohsenhussen8@gmail.com",
-      "title": "Frontend Team Lead",
-      "avatarUrl": "https://i.pravatar.cc/100?img=12",
-      "status": "absent",
-      "project": {
-        "name": "Monday.com",
-        "subtitle": "Campaign Strategy Brainstorm",
-        "iconKey": "monday"
-      },
-      "since": "2021-02-01",
-      "document": {
-        "filename": "brown-james.pdf",
-        "sizeMb": 2.4
-      },
-      "id": "1"
-    },
-    {
-      "id": "2",
-      "name": "Sophia Williams",
-      "email": "sophia@aliqui.com",
-      "avatarUrl": "https://i.pravatar.cc/100?img=32",
-      "title": "HR Assistant",
-      "since": "2021-08-01",
-      "project": {
-        "name": "Notion",
-        "subtitle": "Employee Engagement Survey",
-        "iconKey": "notion"
-      },
-      "document": {
-        "filename": "williams-sophia.pdf",
-        "sizeMb": 2.4
-      },
-      "status": "active",
-      "phone": "+20 11 2345 6789",
-      "location": "Giza, EG",
-      "bio": ""
-    },
-    {
-      "id": "3",
-      "name": "Arthur Taylor",
-      "email": "arthur@aliqui.com",
-      "avatarUrl": "https://i.pravatar.cc/100?img=56",
-      "title": "Entrepreneur / CEO",
-      "since": "2021-08-01",
-      "project": {
-        "name": "Spotify",
-        "subtitle": "Vision and Goal Setting Session",
-        "iconKey": "spotify"
-      },
-      "document": {
-        "filename": "taylor-arthur.pdf",
-        "sizeMb": 2.4
-      },
-      "status": "absent",
-      "phone": "",
-      "location": "",
-      "bio": ""
-    },
-    {
-      "id": "4",
-      "name": "Emma Wright",
-      "email": "emma@aliqui.com",
-      "avatarUrl": "https://i.pravatar.cc/100?img=47",
-      "title": "Front-end Developer",
-      "since": "2022-02-01",
-      "project": {
-        "name": "Formcarry",
-        "subtitle": "User Feedback Analysis",
-        "iconKey": "formcarry"
-      },
-      "document": {
-        "filename": "wright-emma.pdf",
-        "sizeMb": 1.9
-      },
-      "status": "active",
-      "phone": "",
-      "location": "",
-      "bio": ""
-    },
-    {
       "id": "5",
       "name": "Matthew Johnson",
       "email": "matthew@aliqui.com",
@@ -103,25 +22,22 @@
       "bio": ""
     },
     {
-      "id": "6",
-      "name": "Laura Perez",
-      "email": "laura@aliqui.com",
+      "name": " Hamadah Al-Khaldi",
+      "email": "Hamadah_Khaldi@gmail.com",
+      "title": "CTO@Yamm",
       "avatarUrl": "https://i.pravatar.cc/100?img=68",
-      "title": "Fashion Designer",
-      "since": "2022-03-01",
+      "status": "active",
       "project": {
-        "name": "Tidal",
-        "subtitle": "Design Trends and Inspiration",
+        "name": "Yamm User Management",
+        "subtitle": "Campaign Strategy Brainstorm",
         "iconKey": "tidal"
       },
+      "since": "2022-03-01",
       "document": {
         "filename": "perez-laura.pdf",
         "sizeMb": 2.5
       },
-      "status": "absent",
-      "phone": "",
-      "location": "",
-      "bio": ""
+      "id": "6"
     },
     {
       "id": "7",

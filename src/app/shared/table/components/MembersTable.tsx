@@ -90,7 +90,9 @@ const MembersTable = ({
           return (
             <div className="min-w-0">
               <div className="truncate font-medium text-zinc-900 dark:text-zinc-100">{m.title}</div>
-              <div className="text-xs text-zinc-500 dark:text-zinc-400">{formatSince(m.since)}</div>
+              <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                {m.since ? formatSince(m.since) : ""}
+              </div>
             </div>
           );
         },

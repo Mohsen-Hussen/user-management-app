@@ -1,18 +1,10 @@
-import React, { useMemo } from "react";
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-  type Table,
-  type Row,
-  type ColumnDef,
-} from "@tanstack/react-table";
+import React from "react";
+import { flexRender } from "@tanstack/react-table";
 import { cn } from "@/app/shared/lib/cn";
-import Checkbox from "@/app/shared/components/Checkbox";
 import EmptyState from "@/app/shared/components/EmptyState";
 import ErrorState from "@/app/shared/components/ErrorState";
 import LoadingSkeleton from "@/app/shared/components/LoadingSkeleton";
+import { useGenericTable } from "./useGenericTable";
 import type { GenericTableProps } from "./types";
 
 function TableSkeleton() {
@@ -30,64 +22,9 @@ function TableSkeleton() {
 export const GenericTable = React.memo(function GenericTable<TData>(
   props: GenericTableProps<TData>,
 ) {
-  const {
-    data,
-    columns,
-    isLoading,
-    errorMessage,
-    getRowId,
-    rowSelection,
-    onRowSelectionChange,
-    sorting,
-    onSortingChange,
-    emptyTitle = "No results",
-    emptyDescription,
-  } = props;
+  const { data, isLoading, errorMessage, emptyTitle = "No results", emptyDescription } = props;
 
-  const selectionColumn: ColumnDef<TData, unknown> = useMemo(
-    () => ({
-      id: "__select__",
-      header: ({ table }: { table: Table<TData> }) => (
-        <div className="flex items-center justify-center">
-          <Checkbox
-            aria-label="Select all rows"
-            checked={table.getIsAllRowsSelected()}
-            indeterminate={table.getIsSomeRowsSelected()}
-            onChange={(e) => table.toggleAllRowsSelected(!!e.target.checked)}
-          />
-        </div>
-      ),
-      cell: ({ row }: { row: Row<TData> }) => (
-        <div className="flex items-center justify-center">
-          <Checkbox
-            aria-label="Select row"
-            checked={row.getIsSelected()}
-            disabled={!row.getCanSelect()}
-            onChange={(e) => row.toggleSelected(!!e.target.checked)}
-          />
-        </div>
-      ),
-      size: 44,
-      enableSorting: false,
-      enableHiding: false,
-    }),
-    [],
-  );
-
-  const table = useReactTable({
-    data,
-    columns: useMemo(() => [selectionColumn, ...columns], [selectionColumn, columns]),
-    getRowId: (row) => getRowId(row as TData),
-    state: {
-      rowSelection,
-      ...(sorting && { sorting }),
-    },
-    onRowSelectionChange,
-    ...(onSortingChange && { onSortingChange }),
-    enableRowSelection: true,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+  const { table } = useGenericTable(props);
 
   if (isLoading) return <TableSkeleton />;
 
