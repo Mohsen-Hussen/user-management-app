@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { MoreVertical, Trash2, UserRound, ToggleLeft } from "lucide-react";
+import { MoreVertical, Trash2, UserRound, ToggleLeft, Edit } from "lucide-react";
 import useUpdateMemberStatus from "@/app/hooks/useUpdateMemberStatus";
 import useDeleteMembers from "@/app/hooks/useDeleteMembers";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@/app/shared/components/DropdownMenu";
 import ConfirmDialog from "@/app/shared/components/ConfirmDialog";
 import MemberDetailsDialog from "@/app/shared/table/components/MemberDetailsDialog";
+import EditMemberFormDialog from "@/app/shared/table/components/EditMemberFormDialog";
 import IconButton from "@/app/shared/components/IconButton";
 import type { Member } from "@/app/api/members.schemas";
 
@@ -21,6 +22,7 @@ const MemberRowActions = ({ member }: { member: Member }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [detailsOpen, setDetailsOpen] = useState<boolean>(false);
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
 
   const onToggleStatus = useCallback(() => {
     const next = member.status === "active" ? "absent" : "active";
@@ -37,6 +39,12 @@ const MemberRowActions = ({ member }: { member: Member }) => {
     e.preventDefault();
     setMenuOpen(false);
     setConfirmOpen(true);
+  }, []);
+
+  const onEditSelect = useCallback((e: Event) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    setEditOpen(true);
   }, []);
 
   const onConfirmDelete = useCallback(() => {
@@ -58,6 +66,11 @@ const MemberRowActions = ({ member }: { member: Member }) => {
             View details
           </DropdownMenuItem>
 
+          <DropdownMenuItem onSelect={onEditSelect}>
+            <Edit className="h-4 w-4" />
+            Edit member
+          </DropdownMenuItem>
+
           <DropdownMenuItem onSelect={() => onToggleStatus()} disabled={updateStatus.isPending}>
             <ToggleLeft className="h-4 w-4" />
             Toggle status
@@ -77,6 +90,8 @@ const MemberRowActions = ({ member }: { member: Member }) => {
       </DropdownMenu>
 
       <MemberDetailsDialog open={detailsOpen} onOpenChange={setDetailsOpen} memberId={member.id} />
+
+      <EditMemberFormDialog open={editOpen} onOpenChange={setEditOpen} member={member} />
 
       <ConfirmDialog
         open={confirmOpen}

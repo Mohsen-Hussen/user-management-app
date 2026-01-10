@@ -28,6 +28,14 @@ export const updateMemberStatus = async (id: string, status: MemberStatus): Prom
   return MemberSchema.parse(data);
 };
 
+export const updateMember = async (
+  id: string,
+  updates: Partial<Omit<Member, "id">>,
+): Promise<Member> => {
+  const data = await http<Member>(`/users/${id}`, { method: "PUT", body: updates });
+  return MemberSchema.parse(data);
+};
+
 export const deleteMember = async (id: string): Promise<void> => {
   await http<void>(`/users/${id}`, { method: "DELETE" });
 };
